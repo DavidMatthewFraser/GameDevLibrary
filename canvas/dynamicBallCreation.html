@@ -13,6 +13,8 @@
 	}
 	</style>
 	<button onclick="addBall()">add ball</button>
+	<button onclick="addBall(10)">add 10 ball</button>
+	<button onclick="addBall(30)">add 30 ball</button>
 	<canvas id="canvas"></canvas>
 	<script>
 		const canvas = document.getElementById("canvas");
@@ -26,15 +28,18 @@
 
 		let balls = [];
 
-		function addBall() {
-			color = "rgb("+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+", 1)";
-			balls.push({
-				"x": Math.floor((Math.random() * xmax)/2 + radius),
-				"y": Math.floor((Math.random() * ymax)/2 + radius),
-				"dx": Math.random()*1.5,
-				"dy": Math.random()*1.5, 
-				"color": color
-			});
+		function addBall(n=1) {
+			for (j=0; j<n; j++) {
+				color = "rgb("+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+", 1)";
+				balls.push({
+					"x": Math.floor((Math.random() * xmax)/2 + radius),
+					"y": Math.floor((Math.random() * ymax)/2 + radius),
+					"dx": Math.random()*1.5,
+					"dy": Math.random()*1.5, 
+					"radius": (Math.random()*9)+1,
+					"color": color
+				});
+			}
 		}
 
 		function draw() {
@@ -42,15 +47,15 @@
 			for (i=0; i<balls.length; i++) {
 			// ball one
 				ctx.beginPath();
-				ctx.arc(balls[i].x,balls[i].y,radius,0,Math.PI*2);
+				ctx.arc(balls[i].x,balls[i].y,balls[i].radius,0,Math.PI*2);
 				ctx.fillStyle = balls[i].color;
 				ctx.fill();
 				ctx.closePath();
 			// collision			
-				if (balls[i].x + + radius > canvas.width) { balls[i].dx *= -1; } 
-				if (balls[i].x + balls[i].dx - radius < 0) { balls[i].dx *= -1; } 
-				if (balls[i].y + balls[i].dy + radius > canvas.height) { balls[i].dy *= -1; } 
-				if (balls[i].y + balls[i].dy - radius < 0) { balls[i].dy *= -1; } 
+				if (balls[i].x + + balls[i].radius > canvas.width) { balls[i].dx *= -1; } 
+				if (balls[i].x + balls[i].dx - balls[i].radius < 0) { balls[i].dx *= -1; } 
+				if (balls[i].y + balls[i].dy + balls[i].radius > canvas.height) { balls[i].dy *= -1; } 
+				if (balls[i].y + balls[i].dy - balls[i].radius < 0) { balls[i].dy *= -1; } 
 			//move
 				balls[i].x += balls[i].dx;
 				balls[i].y += balls[i].dy;
