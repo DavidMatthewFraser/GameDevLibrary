@@ -27,11 +27,13 @@
 		let balls = [];
 
 		function addBall() {
+			color = "rgb("+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+", 1)";
 			balls.push({
 				"x": Math.floor((Math.random() * xmax)/2 + radius),
 				"y": Math.floor((Math.random() * ymax)/2 + radius),
-				"dx": 1,
-				"dy": 1
+				"dx": Math.random()*1.5,
+				"dy": Math.random()*1.5, 
+				"color": color
 			});
 		}
 
@@ -41,7 +43,7 @@
 			// ball one
 				ctx.beginPath();
 				ctx.arc(balls[i].x,balls[i].y,radius,0,Math.PI*2);
-				ctx.fillStyle = "#edd17e";
+				ctx.fillStyle = balls[i].color;
 				ctx.fill();
 				ctx.closePath();
 			// collision			
