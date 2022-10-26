@@ -1,0 +1,60 @@
+<html>
+	<style>
+	* {
+	margin: 0;
+	padding: 0;
+	}
+	canvas {
+	background: black;
+	display: block;
+	margin: 0 auto;
+	width: 480px;
+	height: 320px;
+	}
+	</style>
+	<label> Choose Edge Size (1-150): <input id="size" type="text"> </label>
+	<button onclick="changeSize()">Go!</button>
+	<canvas id="canvas"></canvas>
+	<script>
+		const canvas = document.getElementById("canvas");
+		const ctx = canvas.getContext("2d");
+	
+		var edgeSize = 11;
+		var rows = Math.floor(canvas.width / edgeSize);
+		var cellLength = canvas.width / rows;
+		var columns = Math.floor(canvas.height / edgeSize); 
+		var cellHeight = canvas.height / columns;
+
+
+		function changeSize() {
+			value = document.getElementById("size").value
+			value = parseInt(value);
+			edgeSize = value;
+
+			rows = Math.floor(canvas.width / edgeSize);
+			cellLength = canvas.width / rows;
+
+			columns = Math.floor(canvas.height / edgeSize); 
+			cellHeight = canvas.height / columns;
+
+
+		}
+
+		function draw() {
+			for (i=0; i<columns; i++) {
+				yshift = i*cellHeight;
+				for (j=0; j<rows; j++) {
+				randomColor = "rgb("+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+", 1)";
+				xshift = j*cellLength;
+				ctx.beginPath();
+				ctx.rect(xshift, yshift,cellLength,cellHeight);
+				ctx.fillStyle = randomColor;
+				ctx.fill();
+				ctx.closePath();
+				}
+			}
+		}
+
+		setInterval(draw, 100);
+	</script>
+</html>
