@@ -1,0 +1,51 @@
+<html>
+	<style>
+	* {
+	margin: 0;
+	padding: 0;
+	}
+	canvas {
+	background: black;
+	display: block;
+	margin: 0 auto;
+	width: 480px;
+	height: 320px;
+	}
+	</style>
+	<canvas id="canvas"></canvas>
+	<script>
+		const canvas = document.getElementById("canvas");
+		const ctx = canvas.getContext("2d");
+
+		let x = canvas.width / 2;
+		let y = canvas.height / 4;
+		let dy = 1; // initial velocity
+		let ballRadius = 10;
+		let ay = 0.0981;
+
+		t = 0;
+
+		function draw() {
+			ctx.clearRect(0,0,canvas.width,canvas.height);
+			ctx.beginPath();
+			ctx.arc(150,y,10,0,Math.PI*2);
+			ctx.fillStyle = "#edd17e";
+			ctx.fill();
+			ctx.closePath();
+			y += dy;
+			y += ay*t;
+			if (y + dy + ay*t +  ballRadius > canvas.height) {
+				dy = dy + ay*t;
+				t = 0;
+				dy *= -1; 
+				if (Math.abs(dy) < 0.5) {
+					dy = 0;
+					ay = 0;
+				}
+			} 
+			t++;
+		}
+
+		setInterval(draw, 5);
+	</script>
+</html>
